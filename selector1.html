@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=p, initial-scale=1.0">
+    <title>Precios de cursos online</title>
+
+<style>
+
+    * {
+  padding: 0;
+  margin: 0;
+  /*border: 1px solid #c00;*/
+}
+
+.container {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background: #ada996; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #eaeaea,
+    #dbdbdb,
+    #f2f2f2,
+    #ada996
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #eaeaea,
+    #dbdbdb,
+    #f2f2f2,
+    #ada996
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.marco {
+  background: #fff;
+  width: 900px;
+  height: 500px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.titulo_curso {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.precio {
+    font-size: 30px;
+    font-weight: bold;
+    color:brown;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+</style>    
+</head>
+<body>
+
+    <div class="container">
+        <div class="marco">
+
+            <div class="titulo_curso">
+                Curso basico de programación en PHP
+            </div>
+
+            <p class="precio">
+                Precio: <span id="price"></span> <span id="currency">USD</span>
+            </p>
+
+            <p>
+                <select id="select_de_monedas">
+                    <option value="usd">USD</option>
+                    <option value="aud">AUD</option>
+                    <option value="eur">EUR</option>
+                    <option value="gbp">GBP</option>
+                    <option value="AR">Peso Argentino</option>
+                  </select>
+            </p>
+
+        </div>    
+    </div>
+
+</body>
+
+
+
+
+
+
+<script>
+    let selector = document.getElementById("select_de_monedas");
+    let price = document.getElementById("price");
+    let simbol = document.getElementById("currency");
+
+    let precio_en_dolares = 15; //precio en dolares del curso
+    price.innerHTML = precio_en_dolares; //cargo el precio inicial en dolaree
+
+    let  preciosMonedas = {
+          AUD: 1.0490, 
+          EUR: 1.4407,
+          GBP: 1.6424,
+          USD: 1.0,
+          AR: 210.3
+    };
+
+    selector.onchange = function () {
+        let currency = selector.value.toUpperCase();
+        price.innerHTML = preciosMonedas[currency]*precio_en_dolares;
+        simbol.innerHTML = currency;
+    }
+</script>
+
+</html>

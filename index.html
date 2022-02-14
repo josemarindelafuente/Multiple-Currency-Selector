@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector de monedas</title>
+    <!--https://stackoverflow.com/questions/7089057/javascript-code-dynamically-change-currencies-with-dropdown-html-->
+</head>
+<body>
+
+
+    <select id="currencySelector">
+        <option value="usd">USD</option>
+        <option value="aud">AUD</option>
+        <option value="eur">EUR</option>
+        <option value="gbp">GBP</option>
+      </select>
+
+
+      <div class="currency" data-currencyName="usd">15<span>USD</span></div>
+      <div class="currency" data-currencyName="eur">15<span>EUR</span></div>
+      <div class="currency" data-currencyName="gbp">15<span>BGP</span></div>
+      <div class="currency" data-currencyName="aud">15<span>AUD</span></div>   
+    
+</body>
+
+
+<script>
+    var selector = document.getElementById("currencySelector");
+    var currencyElements = document.getElementsByClassName("currency");
+    var  usdChangeRate = {
+          AUD: 1.0490, // 1AUD = 1.0490 USD
+          EUR: 1.4407, // 1EUR = 1.4407 USD
+          GBP: 1.6424,
+          USD: 1.0
+        };
+    
+    selector.onchange = function () {
+        var 
+            toCurrency = selector.value.toUpperCase();
+      
+        for (var i=0,l=currencyElements.length; i<l; ++i) {
+            var 
+                el = currencyElements[i];
+            var 
+                fromCurrency = el.getAttribute("data-currencyName").toUpperCase();
+          
+          if (fromCurrency in usdChangeRate) {
+              var 
+                  // currency change to usd
+                  fromCurrencyToUsdAmount = parseFloat(el.innerHTML) * usdChangeRate[fromCurrency];
+                  console.log(parseInt(el.innerHTML,10) + fromCurrency + "=" + fromCurrencyToUsdAmount + "USD");
+              var 
+                  // change to currency unit selected
+                  toCurrenyAmount = fromCurrencyToUsdAmount / usdChangeRate[toCurrency];
+            
+              el.innerHTML = toCurrenyAmount + "<span>" + toCurrency.toUpperCase() + "</span>";
+              el.setAttribute("data-currencyName",toCurrency);
+          }
+        }
+    };
+    </script>
+</html>
