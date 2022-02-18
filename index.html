@@ -3,62 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selector de monedas</title>
-    <!--https://stackoverflow.com/questions/7089057/javascript-code-dynamically-change-currencies-with-dropdown-html-->
+    <meta name="viewport" content="width=p, initial-scale=1.0">
+    <title>Precios de cursos online</title>
+
+<style>
+
+    * {
+  padding: 0;
+  margin: 0;
+  /*border: 1px solid #c00;*/
+}
+
+.container {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background: #ada996; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #eaeaea,
+    #dbdbdb,
+    #f2f2f2,
+    #ada996
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #eaeaea,
+    #dbdbdb,
+    #f2f2f2,
+    #ada996
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.marco {
+  background: #fff;
+  width: 900px;
+  height: 500px;
+  display: flex;
+  /*justify-content:space-evenly;*/
+}
+
+.columna_izq {
+    background-color: azure;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.columna_der {
+    width: 40%;
+    background-color: blanchedalmond;
+    padding: 20px;
+}
+
+.titulo_curso {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.precio {
+    font-size: 30px;
+    font-weight: bold;
+    color:brown;
+    text-align: center;
+    margin-bottom: 20px;
+}
+</style>  
+
 </head>
 <body>
 
+    <div class="container">
 
-    <select id="currencySelector">
-        <option value="usd">USD</option>
-        <option value="aud">AUD</option>
-        <option value="eur">EUR</option>
-        <option value="gbp">GBP</option>
-      </select>
+        <div class="marco">
 
+            <div class="columna_izq">
 
-      <div class="currency" data-currencyName="usd">15<span>USD</span></div>
-      <div class="currency" data-currencyName="eur">15<span>EUR</span></div>
-      <div class="currency" data-currencyName="gbp">15<span>BGP</span></div>
-      <div class="currency" data-currencyName="aud">15<span>AUD</span></div>   
+                <div class="titulo_curso">
+                    Curso basico de programación en PHP
+                </div>
     
+                <p class="precio">
+                    Precio: <span id="price"></span> <span id="currency">USD</span>
+                </p>
+    
+                <p>
+                    <select id="select_de_monedas">
+                        <option value="usd">USD</option>
+                        <option value="aud">AUD</option>
+                        <option value="eur">EUR</option>
+                        <option value="gbp">GBP</option>
+                        <option value="AR">Peso Argentino</option>
+                      </select>
+                </p>
+
+            </div>
+
+            <div class="columna_der">
+                <p>
+                    <h2>Cursos Disponibles</h2> 
+                 </p>
+                 
+                <p>
+                    <div id="lista_cursos"></div>
+                </p>
+            </div>
+
+        
+        </div>    
+    </div>
+
 </body>
 
-
 <script>
-    var selector = document.getElementById("currencySelector");
-    var currencyElements = document.getElementsByClassName("currency");
-    var  usdChangeRate = {
-          AUD: 1.0490, // 1AUD = 1.0490 USD
-          EUR: 1.4407, // 1EUR = 1.4407 USD
+// objeto literal con los curso en linea. precios publicados en USD
+let misCursos = {
+    curso1 : {
+        id: 1,
+        nombre: "Curso avanzado de Trading Profecional",
+        descripcion: "",
+        precio: 20,
+        linkpago: "https://www.ppaypal.com/23423433"
+    },
+    curso2 : {
+        id: 2,
+        nombre: "Curso básico de Excel",
+        descripcion: "",
+        precio: 45,
+        linkpago: "https://www.ppaypal.com/23423433"
+    },
+    curso3 : {
+        id: 3,
+        nombre: "Curso básico de wordpress",
+        descripcion: "",
+        precio: 30,
+        linkpago: "https://www.ppaypal.com/23423433"
+    },
+}
+//objeto literal con las valuaciones de moneda
+//https://stackoverflow.com/questions/7089057/javascript-code-dynamically-change-currencies-with-dropdown-html
+let  preciosMonedas = {
+          AUD: 1.0490, 
+          EUR: 1.4407,
           GBP: 1.6424,
-          USD: 1.0
-        };
-    
-    selector.onchange = function () {
-        var 
-            toCurrency = selector.value.toUpperCase();
-      
-        for (var i=0,l=currencyElements.length; i<l; ++i) {
-            var 
-                el = currencyElements[i];
-            var 
-                fromCurrency = el.getAttribute("data-currencyName").toUpperCase();
-          
-          if (fromCurrency in usdChangeRate) {
-              var 
-                  // currency change to usd
-                  fromCurrencyToUsdAmount = parseFloat(el.innerHTML) * usdChangeRate[fromCurrency];
-                  console.log(parseInt(el.innerHTML,10) + fromCurrency + "=" + fromCurrencyToUsdAmount + "USD");
-              var 
-                  // change to currency unit selected
-                  toCurrenyAmount = fromCurrencyToUsdAmount / usdChangeRate[toCurrency];
-            
-              el.innerHTML = toCurrenyAmount + "<span>" + toCurrency.toUpperCase() + "</span>";
-              el.setAttribute("data-currencyName",toCurrency);
-          }
-        }
+          USD: 1.0,
+          AR: 210.3
     };
-    </script>
+// particularizo los elementos del dom que necesito
+const titulo_curso = document.querySelector(".titulo_curso");
+const price = document.getElementById("price");
+const selector_monedas = document.getElementById("select_de_monedas");
+const simbol = document.getElementById("currency");
+////////////////////////////////////////////////////////
+
+//pongo los datos del primer curso para iniciar el sitio
+titulo_curso.innerHTML = misCursos.curso1.nombre; 
+price.innerHTML = misCursos.curso1.precio; 
+////////////////////////////////////////////////////////
+
+
+        // creo la lista de cursos que se ve en la columna derecha.
+        for (var key in misCursos) {
+            //creo un input radio button 
+            //https://www.w3schools.com/jsref/dom_obj_radio.asp
+            let x = document.createElement("INPUT");
+            x.setAttribute("type", "radio");
+            x.setAttribute("name", "Cursos");
+            x.setAttribute("onchange", "handleChange(this);");
+            x.setAttribute("value", misCursos[key].id);
+    
+            //creo un label que contendrá al input radio button
+            let label = document.createElement('label');
+            label.appendChild(x);
+            label.innerHTML += misCursos[key].nombre;
+            label.innerHTML += "<br><br>";
+            
+            //agrego el curso a la lista de radio buttons
+            lista_cursos.appendChild(label);
+        }
+
+        // funcion invocada por los radio button de los cursos
+        function handleChange(src) {
+            //https://codepen.io/ramtob/pen/qZWzeE
+            console.log(src.value);
+            for (var key in misCursos) {
+
+                if (misCursos[key].id == src.value ){ 
+                    titulo_curso.innerHTML = misCursos[key].nombre;
+                    price.innerHTML = misCursos[key].precio; 
+                }
+            }    
+
+        }
+
+        //selector de monedas
+        selector_monedas.onchange = function () {
+            console.log('cambio de moneda');
+            let currency = selector_monedas.value.toUpperCase();
+            precio_actual = document.getElementById("price").innerHTML;
+            price.innerHTML = preciosMonedas[currency]*precio_actual;
+            simbol.innerHTML = currency;
+        }
+</script>
+
 </html>
