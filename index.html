@@ -6,11 +6,17 @@
     <meta name="viewport" content="width=p, initial-scale=1.0">
     <title>Precios de cursos online</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet"> 
+
+
 <style>
 
     * {
   padding: 0;
   margin: 0;
+  font-family: 'Roboto', sans-serif;
   /*border: 1px solid #c00;*/
 }
 
@@ -60,6 +66,20 @@
     width: 40%;
     background-color: blanchedalmond;
     padding: 20px;
+}
+
+.columna_der h2 {
+  font-size: 2rem;
+  color: #ada996;
+  margin-bottom: 20px;
+}
+
+#lista_cursos label {
+    font-size: .9rem;
+}
+
+#lista_cursos input {
+    margin-right: 5px;
 }
 
 .titulo_curso {
@@ -130,7 +150,7 @@
 let misCursos = {
     curso1 : {
         id: 1,
-        nombre: "Curso avanzado de Trading Profecional",
+        nombre: "Curso avanzado de Trading Profesional",
         descripcion: "",
         precio: 20,
         linkpago: "https://www.ppaypal.com/23423433"
