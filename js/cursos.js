@@ -5,21 +5,21 @@ let misCursos = {
         nombre: "Pack Excel: Básico + Intermedio + Avanzado",
         descripcion: "",
         precio: 20,
-        linkpago: "https://www.ppaypal.com/23423433"
+        linkpago: "https://www.ppaypal.com/11111111"
     },
     curso2 : {
         id: 2,
         nombre: "Curso básico de Excel",
         descripcion: "",
         precio: 45,
-        linkpago: "https://www.ppaypal.com/23423433"
+        linkpago: "https://www.ppaypal.com/22222222"
     },
     curso3 : {
         id: 3,
         nombre: "Curso básico de wordpress",
         descripcion: "",
         precio: 30,
-        linkpago: "https://www.ppaypal.com/23423433"
+        linkpago: "https://www.ppaypal.com/33333333"
     },
 }
 //objeto literal con las valuaciones de moneda
@@ -36,11 +36,14 @@ const titulo_curso = document.querySelector(".titulo_curso");
 const price = document.getElementById("price");
 const selector_monedas = document.getElementById("select_de_monedas");
 const simbol = document.getElementById("currency");
+const boton_comprar = document.querySelector(".boton-comprar");
 ////////////////////////////////////////////////////////
 
 //pongo los datos del primer curso para iniciar el sitio
 titulo_curso.innerHTML = misCursos.curso1.nombre; 
 price.innerHTML = misCursos.curso1.precio; 
+sessionStorage.setItem("precio", misCursos.curso1.precio);
+boton_comprar.setAttribute("href", misCursos.curso1.linkpago);
 ////////////////////////////////////////////////////////
 
 
@@ -72,7 +75,9 @@ price.innerHTML = misCursos.curso1.precio;
 
                 if (misCursos[key].id == src.value ){ 
                     titulo_curso.innerHTML = misCursos[key].nombre;
-                    price.innerHTML = misCursos[key].precio; 
+                    price.innerHTML = misCursos[key].precio;
+                    sessionStorage.setItem("precio", misCursos[key].precio); 
+                    boton_comprar.setAttribute("href", misCursos[key].linkpago);
                 }
             }    
 
@@ -82,7 +87,8 @@ price.innerHTML = misCursos.curso1.precio;
         selector_monedas.onchange = function () {
             console.log('cambio de moneda');
             let currency = selector_monedas.value.toUpperCase();
-            precio_actual = document.getElementById("price").innerHTML;
+            //precio_actual = document.getElementById("price").innerHTML;
+            precio_actual = sessionStorage.getItem("precio");
             price.innerHTML = preciosMonedas[currency]*precio_actual;
             simbol.innerHTML = currency;
         }
